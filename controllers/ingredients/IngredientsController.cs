@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
+/*using Microsoft.AspNetCore.Mvc;
 using webapi.domain.pizza;
 
 namespace webapi.controllers.ingredients;
 
-/*[ApiController]
+[ApiController]
 [Route("[controller]")]
 public class IngredientsController : ControllerBase
 {

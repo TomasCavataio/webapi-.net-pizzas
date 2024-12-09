@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using webapi.core.IFeaturModule;
+using webapi.core.repository;
 using webapi.domain.pizza;
 
 namespace webapi.Features.Ingredients
@@ -17,8 +19,12 @@ namespace webapi.Features.Ingredients
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {            
-            app.MapPost("/ingredients", (IngredientRequest request)=>{
+            app.MapPost("/ingredients", (
+                IAdd<Ingredient> repository,
+                [FromBody]IngredientRequest request
+            )=>{
                 var ingredient = Ingredient.Create(request.Name, request.Cost);
+                repository.Add(ingredient);
                 var response = new IngredientResponse(ingredient.Id, ingredient.Name, ingredient.Cost);
                 return Results.Created("",response);                
             });
