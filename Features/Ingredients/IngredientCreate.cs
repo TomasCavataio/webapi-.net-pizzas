@@ -20,7 +20,7 @@ namespace webapi.Features.Ingredients
         public void AddRoutes(IEndpointRouteBuilder app)
         {            
             app.MapPost("/ingredients", (
-                IAdd<Ingredient> repository,
+                IAdd<Ingredient> repository,                
                 [FromBody]IngredientRequest request
             )=>{
                 var ingredient = Ingredient.Create(request.Name, request.Cost);

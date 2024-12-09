@@ -17,11 +17,7 @@ public interface IGet<T, ID> : IDatabase<T> where T : EntityBase
 {
     T Get(ID id)
     {
-        var entity = Data.Where(x => x.Id.Equals(id)).FirstOrDefault();
-        if (entity == null)
-        {
-            throw new Exception("");
-        }
+        var entity = Data.Where(x => x.Id.Equals(id)).FirstOrDefault() ?? throw new Exception("");
         return entity;
     }
 }
