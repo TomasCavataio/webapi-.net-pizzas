@@ -31,3 +31,4 @@ c:\Users\Home\Documents\Cursos 2024\12-Diciembre\.Net core\webapi\obj\Debug\net8
 c:\Users\Home\Documents\Cursos 2024\12-Diciembre\.Net core\webapi\obj\Debug\net8.0\webapi.pdb
 C:\Users\Home\Documents\Cursos 2024\12-Diciembre\.Net core\webapi\obj\Debug\net8.0\webapi.genruntimeconfig.cache
 C:\Users\Home\Documents\Cursos 2024\12-Diciembre\.Net core\webapi\obj\Debug\net8.0\ref\webapi.dll
+c:\Users\Home\Documents\Cursos 2024\12-Diciembre\.Net core\webapi\obj\Debug\net8.0\webapi.sourcelink.json
