@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using webapi.core.entitybase;
 
 namespace webapi.domain.pizza;
-class Pizza : EntityBase
+public class Pizza : EntityBase
 {
 
     private const decimal PROFIT = 1.2M;
@@ -19,6 +19,13 @@ class Pizza : EntityBase
         Url = url;
         this.ingredients = ingredients;
 
+    }
+
+    protected Pizza(Guid id, string name, string description, string url) : base(id)
+    {
+        Name = name;
+        Description = description;
+        Url = url;
     }
     public void Update(string name, string description, string url)
     {

@@ -1,8 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using webapi.core.IFeaturModule;
 using webapi.core.ioc;
-using webapi.core.repository;
-using webapi.domain.pizza;
-using webapi.infraestructura;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +11,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInjectables();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+builder.Services.AddDbContext<PizzaDbContext>(options=>{
+    options.UseInMemoryDatabase("pizzas");
+});
 
 //builder.Services.AddTransient
 
@@ -38,6 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseExceptionHandler();
 
 /*var summaries = new[]
 {
