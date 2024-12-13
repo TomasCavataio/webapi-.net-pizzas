@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Webapi.Core.Exeptions;
@@ -17,6 +18,19 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
             {
                 Status = StatusCodes.Status404NotFound,
                 Title = "404 Not Found"
+            };
+
+            httpContext.Response.StatusCode = problemDetails.Status.Value;
+
+            await httpContext.Response
+                .WriteAsJsonAsync(problemDetails, cancellationToken);
+        }
+        else if (exception is ValidationException)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = exception.Message,
             };
 
             httpContext.Response.StatusCode = problemDetails.Status.Value;

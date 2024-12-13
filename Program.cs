@@ -1,4 +1,7 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using webapi.core.IFeaturModule;
 using webapi.core.ioc;
 
@@ -13,9 +16,38 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInjectables();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
-builder.Services.AddDbContext<PizzaDbContext>(options=>{
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secret_key123456789999999999999999999999999999")) 
+
+        };
+    });
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddDbContext<PizzaDbContext>(options =>
+{
     options.UseInMemoryDatabase("pizzas");
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                 .AllowAnyHeader()
+                 .AllowAnyMethod()
+                 .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
+        });
+});
+
 
 //builder.Services.AddTransient
 
@@ -32,6 +64,9 @@ builder.Services.AddDbContext<PizzaDbContext>(options=>{
 //y las interfaces están disponibles como singleton
 
 var app = builder.Build();
+app.UseCors();
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 // Configure the HTTP request pipeline.
